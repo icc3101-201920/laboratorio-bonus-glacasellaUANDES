@@ -8,8 +8,23 @@ using System.Threading;
 
 namespace big_sister_base
 {
+
     public class LittleGuy
     {
+        public delegate void LittleGuyTookProductEventHandler(object source, EventArgs args);
+
+        public event LittleGuyTookProductEventHandler LittleGuyTookProduct;
+
+        protected virtual void OnLittleGuyTookProduct()
+        {
+            //3.1- Revisar si existen suscriptores
+            if (LittleGuyTookProduct != null)
+            {
+                //3.2- Se dispara el evento. La fuente es este objeto y EventArgs.Empty ya que no queremos pasar parametros adicionales
+                LittleGuyTookProduct(this, Cart);
+            }
+        }
+
         private Cart cart;
         private List<Product> shopList = new List<Product>();
 
